@@ -1,0 +1,181 @@
+% Copyright (C) Tanner Koza - All Rights Reserved
+% Unauthorized copying of this file, via any medium is strictly prohibited
+% Written by Tanner Koza <jtk0018@auburn.edu>, October 2022
+
+% PROBLEM 5
+\question{Given the geodetic coordinate of the peak of Mt. Everest as Latitude ($L_b$) $27^o\;59'\;16"$ N, Longitude ($\lambda_b$) $86^o\;56'\;40"$ E, and height ($h_b$) 8850 meters (derived by GPS in 1999):}
+\begin{parts}
+
+    \part{Develop a MATLAB function \[\text{function}\;\; r^e_{eb} = \text{llh2xyz}(L_b,\lambda_b,h_b) \]
+    to convert from geodetic curvilinear Latitude, Longitude, and height to ECEF rectangular $x$,$y$, and $z$ coordinates (Please use SI units). Attach a printout of your function.}
+
+    \solution
+    The function \codeword{llh2xyz()} is appended to this document.
+
+    \begin{subparts}
+        \subpart{Test your llh2xyz function using coordinates of the peak of Mt. Everest. What is $\vec{r}^{\;e}_{eb}$?}
+
+        \solution
+        $\vec{r}^{\;e}_{eb}$ was determined to be the following:
+
+        \begin{equation*}
+            \begin{split}
+                \vec{r}^{\;e}_{eb} & =
+                \begin{bmatrix}
+                    300858.16  \\
+                    5636146.41 \\
+                    2979462.45 \\
+                \end{bmatrix}~\unit{m}
+            \end{split}
+        \end{equation*}
+
+    \end{subparts}
+
+    \part
+    Develop a MATLAB function \[\text{function}\;\;\left[L_b,\lambda_b,h_b\right]  = \text{xyz2llh}(r^e_{eb}) \]
+    to convert from ECEF rectangular $x$,$y$, and $z$ coordinates to geodetic curvilinear Latitude, Longitude, and height (Please use SI units). Attach a printout of your function.
+    HINT: This should be an interactive transformation (i.e.\ not closed form).
+
+    \solution
+    The function \codeword{xyz2llh()} is appended to this document. This function was validated using the results of \codeword{llh2xyz()} to solve for the initial latitude, longitude, and height inputs.
+
+    \part{What is the acceleration due to gravity at the ellipsoid (i.e.\ at the ellipsoid $h_b = 0$. HINT: This should only be a function of Latitude -- see attached Pages)?}
+
+    \solution
+    Using the Somigliana model given in Groves, the acceleration due to gravity at Mt. Everest's latitude can be approximated as so:
+
+    \begin{equation}
+        \begin{split}
+            g_0(L) & \approx 9.7803253359\frac{(1 + 0.001931853 \sin^2(L))}{\sqrt{1 - e^2\sin^2(L)}} \\
+        \end{split}
+    \end{equation}
+
+    \begin{equation*}
+        \begin{split}
+            g_0(27.99) & \approx 9.7803253359\frac{(1 + 0.001931853 \sin^2(27.99))}{\sqrt{1 - e^2\sin^2(27.99)}} \\
+            g_0(27.99) & \approx 9.7917~\unit{m/s^2}\\
+        \end{split}
+    \end{equation*}
+
+    \part{What is the magnitude of the centrifugal acceleration ($-\Omega^{e}_{ie}\,\Omega^{e}_{ie}\,\vec{r}^{\;e}_{eb}$) at the ellipsoid and at the peak?}
+
+    \solution
+    Given,
+
+    \[\omega_{ie}= 7.2992115 \times 10^{-5}~\unit{rad/s}\]
+
+    The centrifugal acceleration can be calculated as so:
+
+    \begin{equation*}
+        \begin{split}
+            (\Omega^{e}_{ie}\,\Omega^{e}_{ie}\,\vec{r}^{\;e}_{eb})_{peak} & =
+            \begin{bmatrix}
+                0           & -\omega_{ie} & 0 \\
+                \omega_{ie} & 0            & 0 \\
+                0           & 0            & 0 \\
+            \end{bmatrix}
+            \begin{bmatrix}
+                0           & -\omega_{ie} & 0 \\
+                \omega_{ie} & 0            & 0 \\
+                0           & 0            & 0 \\
+            \end{bmatrix}
+            \begin{bmatrix}
+                300858.16  \\
+                5636146.41 \\
+                2979462.45 \\
+            \end{bmatrix} \\
+            & = \omega_{ie}^2
+            \begin{bmatrix}
+                1 & 0 & 0 \\
+                0 & 1 & 0 \\
+                0 & 0 & 0 \\
+            \end{bmatrix}
+            \begin{bmatrix}
+                300858.16  \\
+                5636146.41 \\
+                2979462.45 \\
+            \end{bmatrix} \\
+            & =
+            \begin{bmatrix}
+                0.00160 \\
+                0.0300  \\
+                0.0     \\
+            \end{bmatrix}~\unit{m/s^2} \\
+        \end{split}
+    \end{equation*}
+
+    \begin{equation*}
+        \begin{split}
+            (\Omega^{e}_{ie}\,\Omega^{e}_{ie}\,\vec{r}^{\;e}_{eb})_{ellipsoid} & =
+            \begin{bmatrix}
+                0           & -\omega_{ie} & 0 \\
+                \omega_{ie} & 0            & 0 \\
+                0           & 0            & 0 \\
+            \end{bmatrix}
+            \begin{bmatrix}
+                0           & -\omega_{ie} & 0 \\
+                \omega_{ie} & 0            & 0 \\
+                0           & 0            & 0 \\
+            \end{bmatrix}
+            \begin{bmatrix}
+                300441.60  \\
+                5628342.55 \\
+                2975309.29 \\
+            \end{bmatrix} \\
+            & = \omega_{ie}^2
+            \begin{bmatrix}
+                1 & 0 & 0 \\
+                0 & 1 & 0 \\
+                0 & 0 & 0 \\
+            \end{bmatrix}
+            \begin{bmatrix}
+                300441.60  \\
+                5628342.55 \\
+                2975309.29 \\
+            \end{bmatrix} \\
+            & =
+            \begin{bmatrix}
+                0.00160 \\
+                0.0299  \\
+                0.0     \\
+            \end{bmatrix}~\unit{m/s^2} \\
+        \end{split}
+    \end{equation*}
+
+    The magnitudes of the centrifugal acceleration vectors are the following:
+
+    \begin{equation*}
+        \begin{split}
+            \norm{\Omega^{e}_{ie}\,\Omega^{e}_{ie}\,\vec{r}^{\;e}_{eb}}_{peak} & = 0.0301~\unit{m/s^2} \\
+            \norm{\Omega^{e}_{ie}\,\Omega^{e}_{ie}\,\vec{r}^{\;e}_{eb}}_{ellipsoid} & = 0.0300~\unit{m/s^2} \\
+        \end{split}
+    \end{equation*}
+
+    \part{What is the magnitude of the gravitational attraction at the ellipsoid and at the peak? HINT: See \textbf{attached pages} to compute $\vec{\gamma}^{\;e}_{ib} = \vec{\gamma}^{\;i}_{eb} \vert_{\vec{r}^{\;i}_{ib} = \vec{r}^{\;e}_{eb}}$}
+
+    \solution
+    The equation for gravitational attraction is given in Equation~\ref{eq:ga}.
+
+    \begin{equation}
+        \begin{split}
+            \gamma^e_{eb} & = -\frac{\mu}{\vert \mathbf{r}^e_{eb} \vert^3} \left\{\mathbf{r}^e_{eb} + \frac{3}{2}J_2 \frac{R_0^2}{\vert \mathbf{r}^e_{eb} \vert^2}
+            \begin{bmatrix}
+                \left(1 - 5\left(\frac{\mathbf{r}^e_{eb_z}}{\vert \mathbf{r}^e_{eb} \vert^2}\right)^2\right)\mathbf{r}^e_{eb_x} \\
+                \left(1 - 5\left(\frac{\mathbf{r}^e_{eb_z}}{\vert \mathbf{r}^e_{eb} \vert^2}\right)^2\right)\mathbf{r}^e_{eb_y} \\
+                \left(3 - 5\left(\frac{\mathbf{r}^e_{eb_z}}{\vert \mathbf{r}^e_{eb} \vert^2}\right)^2\right)\mathbf{r}^e_{eb_z} \\
+            \end{bmatrix}
+            \right\}
+        \end{split}
+        \label{eq:ga}
+    \end{equation}
+
+    The magnitude of the gravitational attractions at the ellipsoid and peak were calculated using Equation~\ref{eq:ga} in MATLAB.
+
+    \begin{equation}
+        \begin{split}
+            \norm{\gamma^e_{ib}}_{peak} & = 9.791~\unit{m/s^2} \\
+            \norm{\gamma^e_{ib}}_{ellipsoid} & = 9.818~\unit{m/s^2} \\
+        \end{split}
+    \end{equation}
+
+\end{parts}

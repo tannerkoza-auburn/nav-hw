@@ -1,0 +1,67 @@
+
+% Copyright (C) Tanner Koza - All Rights Reserved
+% Unauthorized copying of this file, via any medium is strictly prohibited
+% Written by Tanner Koza <jtk0018@auburn.edu>, October 2022
+
+\documentclass[12pt, letterpaper, onecolumn]{exam}
+\usepackage{pdfpages}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+\usepackage{pgfplots}
+\usepackage{grffile}
+\usepackage{amsmath}
+\usepackage{commath}
+\usepackage{siunitx}
+\usepackage[lmargin=71pt, tmargin=1.2in]{geometry}  %For centering solution box
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{plotmarks}
+\usetikzlibrary{arrows.meta}
+\usepgfplotslibrary{patchplots}
+\setcounter{MaxMatrixCols}{20}
+\thispagestyle{empty}
+\lhead{Principles of Navigation}
+\rhead{Tanner Koza}
+
+\begin{document}
+
+\begingroup
+\centering
+\LARGE Principles of Navigation\\
+\LARGE Homework 3 \\[0.5em]
+\large \today\\[0.5em]
+\large Tanner Koza\par
+\large MECH 6970\par
+\endgroup
+\pointsdroppedatright
+\printanswers
+
+\NewDocumentCommand{\codeword}{v}{%
+    \texttt{\textcolor{blue}{#1}}%
+}
+\renewcommand{\solution}{\noindent\textbf{Solution:}\enspace}   %Replace "Ans:" with starting keyword in solution box
+
+\begin{questions}
+
+    \input{p1.tex}
+    \clearpage
+    \input{p2.tex}
+    \clearpage
+    \input{p3.tex}
+    \clearpage
+    \input{p4.tex}
+    \clearpage
+    \input{p5.tex}
+    \clearpage
+
+\end{questions}
+
+\includepdf{./html/timeRotation.pdf}
+\includepdf{./html/timeRotationDot.pdf}
+\includepdf{./html/llh2xyz.pdf}
+\includepdf{./html/xyz2llh.pdf}
+
+\end{document}

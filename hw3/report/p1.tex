@@ -1,0 +1,156 @@
+% Copyright (C) Tanner Koza - All Rights Reserved
+% Unauthorized copying of this file, via any medium is strictly prohibited
+% Written by Tanner Koza <jtk0018@auburn.edu>, October 2022
+
+% PROBLEM 1
+\question{How many multiplications and additions are needed for each of the following computations?}
+\begin{parts}
+    \part{Composition of rotations via rotation matrices, $C_1^2C_0^1$}
+
+    \solution
+    The following depicts the 27 multiplications and 18 additions needed to calculate $C_1^2C_0^1$.
+
+    \begin{equation*}
+        \begin{split}
+            C_1^2C_0^1 & =
+            \begin{bmatrix}
+                a_{11} & a_{12} & a_{13} \\
+                a_{21} & a_{22} & a_{23} \\
+                a_{31} & a_{32} & a_{33} \\
+            \end{bmatrix}
+            \begin{bmatrix}
+                b_{11} & b_{12} & b_{13} \\
+                b_{21} & b_{22} & b_{23} \\
+                b_{31} & b_{32} & b_{33} \\
+            \end{bmatrix} \\
+            & =
+            \begin{bmatrix}
+                a_{11}b_{11}+a_{12}b_{21}+a_{13}b_{31} & a_{11}b_{12}+a_{12}b_{22}+a_{13}b_{32} & a_{11}b_{13}+a_{12}b_{23}+a_{13}b_{33} \\
+                \cdots                                 & \cdots                                 & \cdots                                 \\
+                \cdots                                 & \cdots                                 & \cdots                                 \\
+            \end{bmatrix}
+        \end{split}
+    \end{equation*}
+
+    \part{Composition of rotations via quaternions, $\bar{q}_1^{\;2} \otimes \bar{q}_0^{\;1}$}
+
+    \solution
+    The following depicts the 16 multiplications and 12 additions needed to calculate $\bar{q}_1^{\;2} \otimes \bar{q}_0^{\;1}$. $a_{w-z}$ and $b_{w-z}$ represent the elements of $\bar{q}_1^{\;2}$ and $\bar{q}_0^{\;1}$, respectively.
+
+    \begin{equation*}
+        \begin{split}
+            \bar{q}_1^{\;2} \otimes \bar{q}_0^{\;1} & =
+            \begin{bmatrix}
+                a_w & - a_x & - a_y & -a_z  \\
+                a_x & a_w   & - a_z & a_y   \\
+                a_y & a_z   & a_w   & - a_x \\
+                a_z & -a_y  & a_x   & a_w   \\
+            \end{bmatrix}
+            \begin{bmatrix}
+                b_w \\
+                b_x \\
+                b_y \\
+                b_z \\
+            \end{bmatrix} \\
+            & =
+            \begin{bmatrix}
+                a_wb_w + (-a_xb_x) + (-a_yb_y) + (-a_zb_z) \\
+                a_xb_w + a_wb_x + (-a_zb_y) + a_yb_z       \\
+                a_yb_w + a_zb_x + a_wb_y + (-a_xb_z)       \\
+                a_zb_w + (-a_yb_x) + a_xb_y + a_wb_z       \\
+            \end{bmatrix}
+        \end{split}
+    \end{equation*}
+
+
+    \part{Recoordinatization of a vector via rotation matrix, $C_1^2\vec{r}^{\;1}$}
+
+    \solution
+    The following depicts the 9 multiplications and 6 additions needed to calculate $C_1^2\vec{r}^{\;1}$. $a_{ij}$ and $b_i$ represent the elements of $C_1^2$ and $\vec{r}^{\;1}$, respectively.
+
+    \begin{equation*}
+        \begin{split}
+            C_1^2\vec{r}^{\;1} & =
+            \begin{bmatrix}
+                a_{11} & a_{12} & a_{13} \\
+                a_{21} & a_{22} & a_{23} \\
+                a_{31} & a_{32} & a_{33} \\
+            \end{bmatrix}
+            \begin{bmatrix}
+                b_1 \\
+                b_2 \\
+                b_3 \\
+            \end{bmatrix} \\
+            & =
+            \begin{bmatrix}
+                a_{11}b_1 + a_{12}b_2 + a_{13}b_3 \\
+                a_{21}b_1 + a_{22}b_2 + a_{23}b_3 \\
+                a_{31}b_1 + a_{32}b_2 + a_{33}b_3 \\
+            \end{bmatrix}
+        \end{split}
+    \end{equation*}
+
+    \part{Recoordinatization of a vector via quaternion, $\bar{q}_1^{\;2} \otimes \breve{r}^1 \otimes \left(\bar{q}_1^{\;2}\right)^{-1}$}
+
+    The following depicts the  multiplications and  additions needed to calculate $\bar{q}_1^{\;2} \otimes \breve{r}^1 \otimes \left(\bar{q}_1^{\;2}\right)^{-1}$. $a_{w-z}$, $b_i$, and $c_{w-z}$ represent the elements of $\bar{q}_1^{\;2}$, $\breve{r}^1$, and $\bar{q}_1^{\;2}$, respectively.
+
+    \begin{equation*}
+        \begin{split}
+            \bar{q}_1^{\;2} \otimes \breve{r}^1 & =
+            \begin{bmatrix}
+                a_w & - a_x & - a_y & -a_z  \\
+                a_x & a_w   & - a_z & a_y   \\
+                a_y & a_z   & a_w   & - a_x \\
+                a_z & -a_y  & a_x   & a_w   \\
+            \end{bmatrix}
+            \begin{bmatrix}
+                0   \\
+                b_1 \\
+                b_2 \\
+                b_3 \\
+            \end{bmatrix} \\
+            & =
+            \begin{bmatrix}
+                (-a_xb_1) + (-a_yb_2) + (-a_zb_3) \\
+                a_wb_1 + (-a_zb_2) + a_yb_3       \\
+                a_zb_1 + a_wb_2 + (-a_xb_3)       \\
+                (-a_yb_1) + a_xb_2 + a_wb_3       \\
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+                ab_w \\
+                ab_x \\
+                ab_y \\
+                ab_z \\
+            \end{bmatrix}
+        \end{split}
+    \end{equation*}
+
+    As in~\ref{part@1@2}, the number of multiplications and additions up to this point is 16 and 12, respectively. Simply doubling these values gives the number of multiplications and additions for two quaternion multiplications. Therefore, the number of multiplications needed is 32 and the number of additions needed is 24. The final quaternion product is shown below.
+
+    \begin{equation*}
+        \begin{split}
+            \bar{q}_1^{\;2} \otimes \breve{r}^1 \otimes \left(\bar{q}_1^{\;2}\right)^{-1} & =
+            \begin{bmatrix}
+                ab_w & - ab_x & - ab_y & -ab_z  \\
+                ab_x & ab_w   & - ab_z & ab_y   \\
+                ab_y & ab_z   & ab_w   & - ab_x \\
+                ab_z & -ab_y  & ab_x   & ab_w   \\
+            \end{bmatrix}
+            \begin{bmatrix}
+                c_w \\
+                c_x \\
+                c_y \\
+                c_z \\
+            \end{bmatrix} \\
+            & =
+            \begin{bmatrix}
+                ab_wc_w + (-ab_xc_x) + (-ab_yc_y) + (-ab_zc_z) \\
+                ab_xc_w + ab_wc_x + (-ab_zc_y) + ab_yc_z       \\
+                ab_yc_w + ab_zc_x + ab_wbc_y + (-ab_xc_z)      \\
+                ab_zc_w + (-ab_yc_x) + ab_xc_y + ab_wc_z       \\
+            \end{bmatrix}
+        \end{split}
+    \end{equation*}
+
+\end{parts}

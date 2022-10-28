@@ -1,0 +1,42 @@
+% Copyright (C) Tanner Koza - All Rights Reserved
+% Unauthorized copying of this file, via any medium is strictly prohibited
+% Written by Tanner Koza <jtk0018@auburn.edu>, October 2022
+
+% PROBLEM 3
+\question
+Consider the time-varying coordinate transformation matrix $C^{n}_{b}$ given below that describes the orientation of the body frame as it rotates with respect to the navigation frame.
+
+\[C^n_b =
+    \begin{bmatrix}
+        cos(t)  & sin(t)sin(t^2)  & sin(t)cos(t^2) \\
+        0       & cos(t^2)        & -sin(t^2)      \\
+        -sin(t) & cos(t) sin(t^2) & cos(t)cos(t^2) \\
+    \end{bmatrix} \]
+
+\begin{parts}
+
+    \part{Compute expressions for $\psi$,$\theta$, and $\phi$ based on the fixed-axis definition of roll, pitch, yaw assuming a 1,2,3 series of rotations (roll, pitch, yaw).}
+
+    \solution
+    Euler angles from a 1-2-3 rotation can be extracted using the following:
+
+    \begin{equation*}
+        \begin{split}
+            \phi & = tan^{-1}\left(\frac{-C_{23}}{C_{33}}\right) \\
+            \theta & = sin^{-1}(-C_{13})\\
+            \psi & = tan^{-1}\left(\frac{-C_{12}}{C_{11}}\right)\\
+        \end{split}
+    \end{equation*}
+
+    \part{Use MATLAB to plot $\psi$, $\theta$, and $\phi$ as a function of time.}
+
+    A simulation of the rotations was conducted for 10 seconds at 100 Hz. Figure~\ref*{fig:euler} depicts the resulting Euler angles.
+
+    \begin{figure}[!ht]
+        \centering
+        \input{figs/euler.tex}
+        \caption{Euler Angles vs. Time}
+        \label{fig:euler}
+    \end{figure}
+
+\end{parts}
